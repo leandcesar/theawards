@@ -1,17 +1,18 @@
-name: API workflow
+name: Codecov (coverage tests)
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Test Python API
+    name: Codecov
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
     - name: Install requirements
       run: pip install -r requirements_dev.txt
     - name: Run tests and collect coverage
-      run: pytest --cov .
+      run: pytest --cov app/
     - name: Upload coverage reports to Codecov
       run: |
         curl -Os https://uploader.codecov.io/latest/linux/codecov
