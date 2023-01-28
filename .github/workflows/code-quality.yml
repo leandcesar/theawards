@@ -1,0 +1,25 @@
+name: Checks
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Checks
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Python 3
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install requirements
+      run: pip install -r requirements_dev.txt
+    - name: Format with black
+      run: black --diff --check $(git ls-files '*.py')
+    - name: Measure co-dependency between class elements with Cohesion
+      run: cohesion -f $(git ls-files '*.py')
+    - name: Type checking with mypy
+      run: mypy --strict $(git ls-files '*.py')
+    - name: Find unused code with Vulture
+      run: vulture $(git ls-files '*.py')

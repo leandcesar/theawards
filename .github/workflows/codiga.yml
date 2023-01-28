@@ -3,7 +3,7 @@ name: Codiga (code quality)
 on: [push]
 
 jobs:
-  check-quality:
+  build:
     runs-on: ubuntu-latest
     name: Codiga
     steps:
