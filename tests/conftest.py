@@ -1,9 +1,8 @@
 import pytest
 
-from app import create_app
+from app import Flask, create_app
 
 
 @pytest.fixture
-def app():
-    app = create_app()
-    return app
+def app() -> Flask:
+    return create_app()
