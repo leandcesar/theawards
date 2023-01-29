@@ -1,7 +1,7 @@
-from flask import url_for
+from flask import Response, url_for
 
 
 def test_app_index(client) -> None:
-    response = client.get(url_for("index"))
+    response: Response = client.get(url_for("index"))
     assert response.status_code == 200
-    assert response.json == {"message": "Hello, World!"}
+    assert response.data == b"Hello, World!"
