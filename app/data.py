@@ -98,10 +98,10 @@ class Data:
         self.editions = [Edition(**edition) for edition in editions]
 
     def from_file(self, filename: str) -> None:
-        with open(filename) as f:
+        with open(filename, encoding="UTF-8") as f:
             raw_data = f.read()
-        data = json.loads(raw_data)
-        self.from_json(data)
+        editions = json.loads(raw_data)
+        self.from_json(editions)
 
 
 data = Data()

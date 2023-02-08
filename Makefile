@@ -32,7 +32,7 @@ clean:
 	rm -fr .mypy_cache
 
 run: $(VENV)/bin/activate
-	$(VENV)/bin/flask --app $(PROJECT):create_app run --reload
+	$(VENV)/bin/flask --app $(PROJECT):app run --reload
 
 test: $(VENV)/bin/activate
 	$(VENV)/bin/pytest -vv --diff-width=60 --cov $(PROJECT)

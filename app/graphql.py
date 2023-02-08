@@ -1,5 +1,6 @@
-import graphene
 from typing import Any
+
+import graphene
 
 from app.data import data
 
@@ -32,10 +33,10 @@ class Category(graphene.ObjectType):
         winner=graphene.Boolean(),
     )
 
-    def resolve_nominees(root, info, **options) -> list[Nominee]:
+    def resolve_nominees(self, info, **options) -> list[Nominee]:
         return [
             x
-            for x in root.nominees
+            for x in self.nominees
             if all(resolver(x, attr, value) for attr, value in options.items())
         ]
 
@@ -51,10 +52,10 @@ class Edition(graphene.ObjectType):
         name=graphene.String(),
     )
 
-    def resolve_categories(root, info, **options) -> list[Category]:
+    def resolve_categories(self, info, **options) -> list[Category]:
         return [
             x
-            for x in root.categories
+            for x in self.categories
             if all(resolver(x, attr, value) for attr, value in options.items())
         ]
 
@@ -68,7 +69,7 @@ class Query(graphene.ObjectType):
         year=graphene.Int(),
     )
 
-    def resolve_editions(root, info, **options) -> list[Edition]:
+    def resolve_editions(self, info, **options) -> list[Edition]:
         return [
             x
             for x in data.editions
