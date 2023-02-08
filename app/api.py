@@ -15,7 +15,7 @@ api = Api(
     doc="/docs",
     prefix="/api",
     license="Apache License 2.0",
-    license_url="https://github.com/leandcesar/the-awards/blob/main/LICENSE",
+    license_url="https://github.com/leandcesar/theawards/blob/main/LICENSE",
 )
 ns = api.namespace("oscars", description="Oscars winners and nominees")
 

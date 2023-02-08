@@ -1,4 +1,4 @@
-from flask import Flask, Response, redirect
+from flask import Flask, Response, redirect, render_template
 from flask_caching import Cache
 from flask_cors import CORS
 from flask_graphql import GraphQLView
@@ -16,6 +16,18 @@ app.url_map.strict_slashes = False
 cache = Cache()
 cors = CORS()
 limiter = Limiter(get_remote_address, storage_uri="memory://")
+
+
+@app.route("/ping")
+@limiter.exempt
+def ping() -> Response:
+    return Response("Pong!")
+
+
+@app.route("/")
+@limiter.exempt
+def index() -> str:
+    return render_template("index.html")
 
 
 @app.before_first_request

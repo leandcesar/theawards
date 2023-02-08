@@ -2,6 +2,6 @@ from flask import Response, url_for
 
 
 def test_app_index(client) -> None:
-    response: Response = client.get(url_for("index"))
+    response: Response = client.get(url_for("ping"))
     assert response.status_code == 200
-    assert response.data == b"Hello, World!"
+    assert response.data == b"Pong!"
