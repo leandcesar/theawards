@@ -14,7 +14,9 @@ class Nominee(graphene.ObjectType):
     id = graphene.ID(required=True)
     name = graphene.String(required=True, description="Typically, a movie or an artist")
     more = graphene.String(description="A complement to the nominee's name")
-    note = graphene.String(description="Important observation about the nominee (usually empty)")
+    note = graphene.String(
+        description="Important observation about the nominee (usually empty)"
+    )
     winner = graphene.Boolean(required=True)
 
 
@@ -31,7 +33,11 @@ class Category(graphene.ObjectType):
     )
 
     def resolve_nominees(root, info, **options) -> list[Nominee]:
-        return [x for x in root.nominees if all(resolver(x, attr, value) for attr, value in options.items())]
+        return [
+            x
+            for x in root.nominees
+            if all(resolver(x, attr, value) for attr, value in options.items())
+        ]
 
 
 class Edition(graphene.ObjectType):
@@ -46,7 +52,11 @@ class Edition(graphene.ObjectType):
     )
 
     def resolve_categories(root, info, **options) -> list[Category]:
-        return [x for x in root.categories if all(resolver(x, attr, value) for attr, value in options.items())]
+        return [
+            x
+            for x in root.categories
+            if all(resolver(x, attr, value) for attr, value in options.items())
+        ]
 
 
 class Query(graphene.ObjectType):
@@ -59,7 +69,11 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_editions(root, info, **options) -> list[Edition]:
-        return [x for x in data.editions if all(resolver(x, attr, value) for attr, value in options.items())]
+        return [
+            x
+            for x in data.editions
+            if all(resolver(x, attr, value) for attr, value in options.items())
+        ]
 
 
 schema = graphene.Schema(query=Query)

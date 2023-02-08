@@ -91,7 +91,9 @@ class Category(Resource):
         categories = [x.as_dict(fields=category.keys()) for x in item.categories]
         args = category_parser.parse_args()
         if args.get("name") is not None:
-            categories = [x for x in categories if args["name"].lower() in x["name"].lower()]
+            categories = [
+                x for x in categories if args["name"].lower() in x["name"].lower()
+            ]
         return categories, 200
 
 
@@ -108,7 +110,9 @@ class Nominee(Resource):
         nominees = [x.as_dict(fields=nominee.keys()) for x in subitem.nominees]
         args = nominee_parser.parse_args()
         if args.get("name") is not None:
-            nominees = [x for x in nominees if args["name"].lower() in x["name"].lower()]
+            nominees = [
+                x for x in nominees if args["name"].lower() in x["name"].lower()
+            ]
         if args.get("winner") is not None:
             nominees = [x for x in nominees if args["winner"] == x["winner"]]
         return nominees, 200

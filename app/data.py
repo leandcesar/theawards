@@ -28,7 +28,9 @@ class Nominee:
 
     def as_dict(self, *, fields: Optional[List[str]] = None) -> dict:
         if fields:
-            return {field: value for field, value in asdict(self).items() if field in fields}
+            return {
+                field: value for field, value in asdict(self).items() if field in fields
+            }
         return asdict(self)
 
 
@@ -44,11 +46,15 @@ class Category:
         self.nominees = [Nominee(**nominee) for nominee in self.nominees]
 
     def get_nominee(self, id_nominee: int) -> Optional[Nominee]:
-        return next((nominee for nominee in self.nominees if nominee.id == id_nominee), None)
+        return next(
+            (nominee for nominee in self.nominees if nominee.id == id_nominee), None
+        )
 
     def as_dict(self, *, fields: Optional[List[str]] = None) -> dict:
         if fields:
-            return {field: value for field, value in asdict(self).items() if field in fields}
+            return {
+                field: value for field, value in asdict(self).items() if field in fields
+            }
         return asdict(self)
 
 
@@ -66,11 +72,16 @@ class Edition:
         self.categories = [Category(**category) for category in self.categories]
 
     def get_category(self, id_category: int) -> Optional[Category]:
-        return next((category for category in self.categories if category.id == id_category), None)
+        return next(
+            (category for category in self.categories if category.id == id_category),
+            None,
+        )
 
     def as_dict(self, *, fields: Optional[List[str]] = None) -> dict:
         if fields:
-            return {field: value for field, value in asdict(self).items() if field in fields}
+            return {
+                field: value for field, value in asdict(self).items() if field in fields
+            }
         return asdict(self)
 
 
@@ -79,7 +90,9 @@ class Data:
     editions: Optional[List[Edition]] = None
 
     def get_edition(self, id_edition: int) -> Optional[Edition]:
-        return next((edition for edition in self.editions if edition.id == id_edition), None)
+        return next(
+            (edition for edition in self.editions if edition.id == id_edition), None
+        )
 
     def from_json(self, editions: List[dict]) -> None:
         self.editions = [Edition(**edition) for edition in editions]
