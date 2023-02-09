@@ -15,12 +15,17 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 app.url_map.strict_slashes = False
 cache = Cache(app)
 cors = CORS(app)
-limiter = Limiter(get_remote_address, app=app, storage_uri="memory://")
 app.add_url_rule(
     "/graphql",
     view_func=GraphQLView.as_view("graphql", schema=schema, graphiql=True),
 )
 api.init_app(app)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["500 per hour", "50 per minute"],
+    storage_uri="memory://",
+)
 
 
 @app.route("/ping")
@@ -38,6 +43,10 @@ def index() -> str:
 @app.before_first_request
 def create_data() -> None:
     data.from_file("app/data.json")
+
+
+def create_app() -> Flask:
+    return app
 
 
 if __name__ == "__main__":
