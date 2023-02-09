@@ -16,7 +16,9 @@ def test_api_editions(client) -> None:
 
 
 def test_api_editions_by_year(client) -> None:
-    response: Response = client.get(url_for("oscars_edition"), query_string={"year": 2000})
+    response: Response = client.get(
+        url_for("oscars_edition"), query_string={"year": 2000}
+    )
     assert response.status_code == 200
     assert len(response.get_json()) == 1
     assert response.get_json()[0] == {
@@ -35,14 +37,21 @@ def test_api_categories(client) -> None:
 
 
 def test_api_categories_by_name(client) -> None:
-    response: Response = client.get(url_for("oscars_category", id_edition=22), query_string={"name": "direct"})
+    response: Response = client.get(
+        url_for("oscars_category", id_edition=22), query_string={"name": "direct"}
+    )
     assert response.status_code == 200
     assert len(response.get_json()) == 3
-    assert response.get_json()[0] == {"id": 1681, "name": "Art Direction (Black-And-White)"}
+    assert response.get_json()[0] == {
+        "id": 1681,
+        "name": "Art Direction (Black-And-White)",
+    }
 
 
 def test_api_nominees(client) -> None:
-    response: Response = client.get(url_for("oscars_nominee", id_edition=41, id_category=1001))
+    response: Response = client.get(
+        url_for("oscars_nominee", id_edition=41, id_category=1001)
+    )
     assert response.status_code == 200
     assert len(response.get_json()) == 5
     assert response.get_json()[0] == {
@@ -56,7 +65,8 @@ def test_api_nominees(client) -> None:
 
 def test_api_nominees_by_name(client) -> None:
     response: Response = client.get(
-        url_for("oscars_nominee", id_edition=20, id_category=1001), query_string={"name": "a"}
+        url_for("oscars_nominee", id_edition=20, id_category=1001),
+        query_string={"name": "a"},
     )
     assert response.status_code == 200
     assert len(response.get_json()) == 4
@@ -71,7 +81,8 @@ def test_api_nominees_by_name(client) -> None:
 
 def test_api_nominees_by_winner(client) -> None:
     response: Response = client.get(
-        url_for("oscars_nominee", id_edition=41, id_category=1001), query_string={"winner": True}
+        url_for("oscars_nominee", id_edition=41, id_category=1001),
+        query_string={"winner": True},
     )
     assert response.status_code == 200
     assert len(response.get_json()) == 1

@@ -38,10 +38,10 @@ test: $(VENV)/bin/activate
 	$(VENV)/bin/pytest -vv --diff-width=60 --cov $(PROJECT)
 
 format: $(VENV)/bin/activate
-	$(VENV)/bin/black $(PROJECT)
+	$(VENV)/bin/black .
 
 lint/black: $(VENV)/bin/activate
-	$(VENV)/bin/black --diff --check $(PROJECT)
+	$(VENV)/bin/black --diff --check .
 
 lint/mypy: $(VENV)/bin/activate
 	$(VENV)/bin/mypy --strict --implicit-reexport $(PROJECT)
