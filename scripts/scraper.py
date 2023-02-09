@@ -22,13 +22,12 @@ def to_ordinal(number: int) -> str:
 
 
 def read_file(filename: str) -> list[str]:
-    with open(filename) as f:
-        data = f.readlines()
-    return data
+    with open(filename, encoding="UTF-8") as f:
+        return f.readlines()
 
 
 def write_file(filename: str, data: list[str]) -> None:
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="UTF-8") as f:
         f.write(json.dumps(data))
 
 
@@ -93,20 +92,20 @@ def raw_data_to_json(raw_data: list[str]) -> list[dict]:
 
 
 def merge_jsons(*, base: list[dict], append: list[dict]) -> list[dict]:
-    data = base.copy()
+    new_data = base.copy()
     for i, edition in enumerate(append):
         for j, category in enumerate(edition["categories"]):
             nominee = category["nominees"][0]
-            for n in data[i]["categories"][j]["nominees"]:
+            for n in base[i]["categories"][j]["nominees"]:
                 if nominee["name"] == n["name"]:
                     n["winner"] = True
-    return data
+    return new_data
 
 
 if __name__ == "__main__":
-    raw_data = read_file("scripts/raw_data_nominees.txt")
-    nominees = raw_data_to_json(raw_data)
-    raw_data = read_file("scripts/raw_data_winners.txt")
-    winners = raw_data_to_json(raw_data)
-    data = merge_jsons(base=nominees, append=winners)
-    write_file("app/data.json", data)
+    raw_data_nominees = read_file("scripts/raw_data_nominees.txt")
+    nominees = raw_data_to_json(raw_data_nominees)
+    raw_data_winners = read_file("scripts/raw_data_winners.txt")
+    winners = raw_data_to_json(raw_data_winners)
+    merged_data = merge_jsons(base=nominees, append=winners)
+    write_file("app/data.json", merged_data)
